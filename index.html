@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cloud Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <h2>Menu</h2>
+
+    <a href="#about" onclick="closeNav()">About Me</a>
+    <a href="#skills" onclick="closeNav()">Skills</a>
+    <a href="#projects" onclick="closeNav()">Projects</a>
+    <a href="contact.html">Get in Touch</a>
+  </div>
+
+  <!-- Hamburger button -->
+  <span class="menu-button" onclick="openNav()">&#9776;</span>
+
+  <header>
+    <h1>Chandan Mastakar</h1>
+    <p>Cloud / IT Portfolio</p>
+  </header>
+
+  <main>
+
+    <!-- About -->
+    <section id="about">
+      <h2>About Me</h2>
+
+      <p>
+        Technical Consultant with 3+ years of professional experience in consulting,
+        I am currently expanding my expertise into cloud technologies through
+        Microsoft Azure and hands-on cloud infrastructure learning.
+
+        Currently working in the PLM domain, primarily supporting clients in the
+        automotive and aerospace & defense industries. Professionally proficient
+        across multiple languages including Japanese and English, I regularly bridge
+        communication between Japanese clients and global technical teams to provide
+        technical support, training, troubleshooting, and project coordination.
+
+        My experience includes supporting an on-premises to AWS cloud migration,
+        Teamcenter integration testing for an automotive client, and acting as the
+        sole on-site 3DEXPERIENCE point of contact and Local Coach for an aerospace
+        & defense client.
+
+        My specialty lies in enterprise software implementation, customer enablement,
+        technical troubleshooting, and bridging communication between Japanese
+        customers and global technical teams.
+      </p>
+    </section>
+
+
+    <!-- Skills -->
+    <section id="skills">
+      <h2>Skills & Certifications</h2>
+
+      <div class="skills-container">
+
+        <!-- Software Skills -->
+        <div class="skills-column">
+          <h3>Software Skills</h3>
+
+          <ul>
+            <li>Microsoft Azure</li>
+            <li>Windows</li>
+            <li>Python</li>
+            <li>Git & GitHub</li>
+            <li>VS Code</li>
+            <li>3DEXPERIENCE</li>
+            <li>Teamcenter</li>
+          </ul>
+        </div>
+
+        <!-- General Skills -->
+        <div class="skills-column">
+          <h3>General Skills</h3>
+
+          <ul>
+            <li>Troubleshooting</li>
+            <li>Technical Support</li>
+            <li>Client Coaching & Training</li>
+            <li>Problem Solving</li>
+            <li>Client Support</li>
+            <li>Solution & Workaround Design</li>
+            <li>Networking</li>
+          </ul>
+        </div>
+
+        <!-- Certifications -->
+        <div class="skills-column">
+          <h3>Certifications</h3>
+
+          <ul>
+            <li>Microsoft Azure Fundamentals (AZ-900)</li>
+            <li>Mendix Rapid Developer</li>
+            <li>Mendix Intermediate Developer</li>
+            <li>CATIA Mechanical Design</li>
+            <li>Teamcenter 13</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="project">
+        <h3>Azure Portfolio Project #1</h3>
+
+        <p>
+          A simple cloud-hosted portfolio built using free Azure services.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- Contact CTA -->
+    <section class="contact-cta">
+        <h2>Want to Get in Touch?</h2>
+
+        <p>
+            Feel free to reach out for professional inquiries or opportunities.
+        </p>
+
+        <button class="contact-button" onclick="window.location.href='contact.html'">
+            Get in Touch
+        </button>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

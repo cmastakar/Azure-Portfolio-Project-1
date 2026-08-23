@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Get in Touch | Chandan Mastakar</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div id="mySidenav" class="sidenav">
+
+    <a href="javascript:void(0)"
+       class="closebtn"
+       onclick="closeNav()">
+       &times;
+    </a>
+
+    <h2>Menu</h2>
+
+    <!-- These return to sections on the home page -->
+    <a href="index.html#about">About Me</a>
+    <a href="index.html#skills">Skills</a>
+    <a href="index.html#projects">Projects</a>
+
+    <a href="contact.html">Get in Touch</a>
+
+  </div>
+
+  <!-- Hamburger Menu -->
+  <span class="menu-button" onclick="openNav()">
+    &#9776;
+  </span>
+
+
+  <header>
+
+    <h1>Get in Touch</h1>
+
+    <p>
+      Feel free to contact me regarding opportunities,
+      projects or professional enquiries.
+    </p>
+
+  </header>
+
+
+  <main>
+
+    <section>
+
+      <h2>Contact Details</h2>
+
+      <div class="contact-details">
+
+        <p>
+          <strong>Name:</strong>
+          Chandan Mastakar
+        </p>
+
+        <p>
+          <strong>Email:</strong>
+          cmastakar@gmail.com
+        </p>
+
+        <p>
+            <strong> LinkedIn:</strong>
+            <a href="https://www.linkedin.com/in/chandan-mastakar-b32551208" target="_blank" rel="noopener noreferrer">
+            View my LinkedIn profile
+            </a>
+        </p>
+
+        <p>
+          <strong>GitHub:</strong>
+          Add your GitHub profile
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <section>
+
+      <h2>Send Me a Message</h2>
+
+      <form id="contactForm">
+
+        <input
+          type="text"
+          id="name"
+          placeholder="Your name"
+          required
+        >
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Your email"
+          required
+        >
+
+        <input
+          type="text"
+          id="company"
+          placeholder="Company"
+        >
+
+        <textarea
+          id="message"
+          placeholder="Your message"
+          required
+        ></textarea>
+
+        <button type="submit">
+          Send Message
+        </button>
+
+      </form>
+
+      <p id="formMessage"></p>
+
+    </section>
+
+  </main>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>

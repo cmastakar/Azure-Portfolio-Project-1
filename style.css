@@ -1,0 +1,201 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
+  color: #222;
+}
+
+header {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #111827;
+  color: white;
+}
+
+main {
+  max-width: 800px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+section {
+  background-color: white;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.project {
+  padding: 15px;
+  border-left: 4px solid #0078d4;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input,
+textarea {
+  padding: 12px;
+  font-size: 16px;
+}
+
+textarea {
+  min-height: 120px;
+}
+
+button {
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #005ea6;
+}
+
+/* Sidebar */
+.sidenav {
+  height: 100%;
+  width: 0;
+
+  position: fixed;
+  z-index: 1000;
+
+  top: 0;
+  left: 0;
+
+  background-color: #111827;
+
+  overflow-x: hidden;
+
+  padding-top: 60px;
+}
+
+/* Sidebar title */
+.sidenav h2 {
+  color: white;
+  padding-left: 32px;
+}
+
+/* Sidebar links */
+.sidenav a {
+  padding: 12px 12px 12px 32px;
+
+  text-decoration: none;
+
+  font-size: 20px;
+
+  color: #b0b0b0;
+
+  display: block;
+}
+
+.sidenav a:hover {
+  color: white;
+}
+
+/* Close button */
+.sidenav .closebtn {
+  position: absolute;
+
+  top: 10px;
+  right: 25px;
+
+  font-size: 36px;
+}
+
+/* Hamburger button */
+.menu-button {
+  font-size: 30px;
+
+  cursor: pointer;
+
+  position: fixed;
+
+  top: 20px;
+  left: 20px;
+
+  z-index: 999;
+
+  color: white;
+
+  background-color: #111827;
+
+  padding: 5px 10px;
+
+  border-radius: 5px;
+}
+
+/* Makes sidebar anchor links line up properly */
+html {
+  scroll-behavior: smooth;
+}
+.skills-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+}
+
+.skills-column {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.skills-column h3 {
+  margin-top: 0;
+  color: #111827;
+  border-bottom: 2px solid #0078d4;
+  padding-bottom: 10px;
+}
+
+.skills-column ul {
+  padding-left: 20px;
+}
+
+.skills-column li {
+  margin-bottom: 10px;
+}
+
+.contact-cta {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px;
+  margin-top: 30px;
+}
+
+.contact-button {
+  display: inline-block;
+
+  padding: 12px 28px;
+  margin-top: 15px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.contact-button:hover {
+  transform: translateY(-2px);
+}
