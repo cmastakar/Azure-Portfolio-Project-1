@@ -1,6 +1,9 @@
 import azure.functions as func
 import json
+import os
 import re
+import urllib.parse
+import urllib.request
 
 app = func.FunctionApp()
 
@@ -19,15 +22,17 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
         company = str(data.get("company", "")).strip()
         message = str(data.get("message", "")).strip()
         website = str(data.get("website", "")).strip()
+        turnstile_token = str(data.get("turnstileToken", "")).strip()
 
-        if website: 
+        # Honeypot check
+        if website:
             return func.HttpResponse(
                 json.dumps({"success": True}),
                 status_code=200,
                 mimetype="application/json"
             )
 
-        # Check required fields
+        # Required fields
         if not name or not email or not message:
             return func.HttpResponse(
                 json.dumps({"error": "Missing required fields"}),
@@ -35,7 +40,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype="application/json"
             )
 
-        # Length limits
+        # Length validation
         if len(name) > 100:
             return func.HttpResponse(
                 json.dumps({"error": "Name is too long"}),
@@ -64,7 +69,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype="application/json"
             )
 
-        # Basic email format check
+        # Basic email validation
         email_pattern = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
 
         if not re.match(email_pattern, email):
@@ -74,6 +79,53 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype="application/json"
             )
 
+        # Turnstile token must exist
+        if not turnstile_token:
+            return func.HttpResponse(
+                json.dumps({"error": "Security verification missing"}),
+                status_code=400,
+                mimetype="application/json"
+            )
+
+        # Get secret from Azure environment variable
+        turnstile_secret = os.environ.get("TURNSTILE_SECRET_KEY")
+
+        if not turnstile_secret:
+            return func.HttpResponse(
+                json.dumps({"error": "Server security configuration error"}),
+                status_code=500,
+                mimetype="application/json"
+            )
+
+        # Verify token with Cloudflare
+        verification_data = urllib.parse.urlencode({
+            "secret": turnstile_secret,
+            "response": turnstile_token
+        }).encode("utf-8")
+
+        verification_request = urllib.request.Request(
+            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+            data=verification_data,
+            method="POST"
+        )
+
+        with urllib.request.urlopen(
+            verification_request,
+            timeout=10
+        ) as verification_response:
+
+            verification_result = json.loads(
+                verification_response.read().decode("utf-8")
+            )
+
+        if not verification_result.get("success"):
+            return func.HttpResponse(
+                json.dumps({"error": "Security verification failed"}),
+                status_code=403,
+                mimetype="application/json"
+            )
+
+        # Success
         return func.HttpResponse(
             json.dumps({
                 "success": True,
@@ -87,5 +139,12 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(
             json.dumps({"error": "Invalid request"}),
             status_code=400,
+            mimetype="application/json"
+        )
+
+    except Exception:
+        return func.HttpResponse(
+            json.dumps({"error": "Server error"}),
+            status_code=500,
             mimetype="application/json"
         )
