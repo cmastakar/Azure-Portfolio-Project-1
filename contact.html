@@ -91,37 +91,53 @@
 
       <form id="contactForm">
 
-        <input
-          type="text"
-          id="name"
-          placeholder="Your name"
-          required
-        >
+  <input
+    type="text"
+    id="name"
+    placeholder="Your name"
+    maxlength="100"
+    required
+  >
 
-        <input
-          type="email"
-          id="email"
-          placeholder="Your email"
-          required
-        >
+  <input
+    type="email"
+    id="email"
+    placeholder="Your email"
+    maxlength="254"
+    required
+  >
 
-        <input
-          type="text"
-          id="company"
-          placeholder="Company"
-        >
+  <input
+    type="text"
+    id="company"
+    placeholder="Company"
+    maxlength="150"
+  >
 
-        <textarea
-          id="message"
-          placeholder="Your message"
-          required
-        ></textarea>
+  <textarea
+    id="message"
+    placeholder="Your message"
+    maxlength="3000"
+    required
+  ></textarea>
 
-        <button type="submit">
-          Send Message
-        </button>
+  <!-- Honeypot: real users should never interact with this -->
+  <div class="honeypot" aria-hidden="true">
+    <label for="website">Website</label>
+    <input
+      type="text"
+      id="website"
+      name="website"
+      tabindex="-1"
+      autocomplete="off"
+    >
+  </div>
 
-      </form>
+  <button type="submit">
+    Send Message
+  </button>
+
+</form>
 
       <p id="formMessage"></p>
 
