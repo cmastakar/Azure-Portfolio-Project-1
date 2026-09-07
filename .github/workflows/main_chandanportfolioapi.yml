@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './api' # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './API' # set this to the path to your web app project, defaults to the repository root
   PYTHON_VERSION: '3.14' # set this to the python version to use (supports 3.6, 3.7, 3.8)
 
 jobs:
@@ -30,12 +30,12 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: pip install -r api/requirements.txt --target="api/.python_packages/lib/site-packages"
+        run: pip install -r api/requirements.txt --target="API/.python_packages/lib/site-packages"
 
       # Optional: Add step to run tests here
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip api 
+        run: zip -r release.zip API
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
