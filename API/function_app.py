@@ -18,6 +18,14 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
         email = str(data.get("email", "")).strip()
         company = str(data.get("company", "")).strip()
         message = str(data.get("message", "")).strip()
+        website = str(data.get("website", "")).strip()
+
+        if website: 
+            return func.HttpResponse(
+                json.dumps({"success": True}),
+                status_code=200,
+                mimetype="application/json"
+            )
 
         # Check required fields
         if not name or not email or not message:
