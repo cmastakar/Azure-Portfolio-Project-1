@@ -3,7 +3,7 @@ import json
 
 app = func.FunctionApp()
 
-@app.route(route="contact", methods=["POST"])
+@app.route(route="contact", methods=["POST"], auth_level=func.AuthLevel.ANONYMOUS)
 def contact(req: func.HttpRequest) -> func.HttpResponse:
 
     try:
