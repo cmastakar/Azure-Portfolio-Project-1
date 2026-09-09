@@ -1,11 +1,15 @@
 import azure.functions as func
+from azure.communication.email import EmailClient
+
 import json
 import os
 import re
 import urllib.parse
 import urllib.request
 
+
 app = func.FunctionApp()
+
 
 @app.route(
     route="contact",
@@ -87,7 +91,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype="application/json"
             )
 
-        # Get secret from Azure environment variable
+        # Get Turnstile secret from Azure environment variables
         turnstile_secret = os.environ.get("TURNSTILE_SECRET_KEY")
 
         if not turnstile_secret:
@@ -97,7 +101,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype="application/json"
             )
 
-        # Verify token with Cloudflare
+        # Verify Turnstile token with Cloudflare
         verification_data = urllib.parse.urlencode({
             "secret": turnstile_secret,
             "response": turnstile_token
@@ -113,7 +117,6 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
             verification_request,
             timeout=10
         ) as verification_response:
-
             verification_result = json.loads(
                 verification_response.read().decode("utf-8")
             )
@@ -125,11 +128,70 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype="application/json"
             )
 
+        # Email configuration
+        connection_string = os.environ.get("ACS_CONNECTION_STRING")
+        sender_address = os.environ.get("ACS_SENDER_ADDRESS")
+        recipient_email = os.environ.get("CONTACT_RECIPIENT_EMAIL")
+
+        if not all([
+            connection_string,
+            sender_address,
+            recipient_email
+        ]):
+            return func.HttpResponse(
+                json.dumps({"error": "Email service configuration error"}),
+                status_code=500,
+                mimetype="application/json"
+            )
+
+        # Create Azure Communication Services email client
+        email_client = EmailClient.from_connection_string(
+            connection_string
+        )
+
+        # Build email
+        email_message = {
+            "senderAddress": sender_address,
+            "recipients": {
+                "to": [
+                    {
+                        "address": recipient_email
+                    }
+                ]
+            },
+            "content": {
+                "subject": f"Portfolio contact from {name}",
+                "plainText": (
+                    "New portfolio contact submission\n\n"
+                    f"Name: {name}\n"
+                    f"Email: {email}\n"
+                    f"Company: {company or 'Not provided'}\n\n"
+                    f"Message:\n{message}"
+                )
+            },
+            "replyTo": [
+                {
+                    "address": email
+                }
+            ]
+        }
+
+        # Send email
+        poller = email_client.begin_send(email_message)
+        email_result = poller.result()
+
+        if email_result.get("status") != "Succeeded":
+            return func.HttpResponse(
+                json.dumps({"error": "Unable to send email"}),
+                status_code=500,
+                mimetype="application/json"
+            )
+
         # Success
         return func.HttpResponse(
             json.dumps({
                 "success": True,
-                "message": "Contact request received"
+                "message": "Message sent successfully"
             }),
             status_code=200,
             mimetype="application/json"
@@ -142,7 +204,9 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
             mimetype="application/json"
         )
 
-    except Exception:
+    except Exception as error:
+        print(f"Contact function error: {error}")
+
         return func.HttpResponse(
             json.dumps({"error": "Server error"}),
             status_code=500,
