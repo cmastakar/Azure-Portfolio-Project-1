@@ -1,35 +1,25 @@
-Azure Portfolio Project #1 
+Azure Portfolio Project #1 : Serverless Azure Portfolio Website 
 
-The following contains information about my personal cloud project, which will showcase my technical proficiency with Microsoft Azure and cloud use cases. 
+URL: https://wonderful-bay-05fbbb710.7.azurestaticapps.net
 
 Overview 
-I have created a simple cloud hosted web app from which people can view information about my background, skills and contact information. Think of it as sort of a personal marketing website, from which viewers can send messages to me through the website. 
+This project is a simple portfolio website hosted on Azure static apps used to showcase my experiences and hands on Cloud projects. The website contains a simple contact form and email delivery features. 
 
-Current Features 
-Responsive Website 
-Responsive Navigation Sidebar
-Message Feature
-Link Access 
-Page Navigation
+Architecture
+The hierarchy of architecture used to create this project is as follows:
+HTML/FrontEnd ->Static Web App -> JavaScript -> Azure Function -> Turnstile -> ACS Email 
 
-Planned Azure Architecture
-The planned Azure Architecture consists of static web apps hosted on Azure, which will use the Azure function to provide Database Actions (Adding of Contacts and messages to the database). 
+I initially started off the project by developing a simple outline or draft of the front end customer facing elements of the project such as the: website, visual content and the text content that would go into the site. This involved the creation of the Main and Contact pages, as well as ensuring the correct contact details were listed/available through the aforementioned pages. 
 
-User -> Azure Static Web App -> Azure Function -> Database -> Webpage
-
-Project Components
-HTML files (Contact page and Home Page)
-CSS File 
-JavaScript File
+The back end development started in Azure where I set up a basic static web app which would serve as the basis of my portfolio website. 
 
 
+Azure Services Used
+Static Web Apps, Functions, Communication Services, Email Communication Services, managed Domain
 
-Progress 
-Front End Components (Homepage, CSS, JavaScript)
-Design / Development of Main Home Page
-Design / Development of Home Page Responsive behavior 
-Design / Development of Home Page Style and Visuals
+Security Implemented
+CORS, server-side Validation, honeypot, Turnstile, Environment vairables/secretes, Anonymous endpoint design 
 
-Azure Back End implementation - Static Web Apps
-Azure Back End implementation - Azure Functions creation and linkage
-Azure Back End implementation - Azure Database(For Storing messages and contact information) 
+CI/CD 
+GITHUB actions, Separated frontend and backend deployments 
+
