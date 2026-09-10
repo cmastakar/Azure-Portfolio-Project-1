@@ -36,7 +36,10 @@ form.addEventListener("submit", async function (event) {
       }
     );
 
-    const result = await response.json();
+    const rawResponse = await response.text();
+
+    console.log("Status:", response.status);
+    console.log("Response:", rawResponse);
 
     if (response.ok) {
       formMessage.textContent =
