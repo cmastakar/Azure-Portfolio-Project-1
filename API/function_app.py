@@ -198,7 +198,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except (ValueError, TypeError) as error:
-    print(f"Value/Type error: {error}")
+        print(f"Value/Type error: {error}")
 
     return func.HttpResponse(
         json.dumps({"error": "Invalid request"}),
