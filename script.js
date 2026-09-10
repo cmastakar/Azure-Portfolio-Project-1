@@ -42,8 +42,7 @@ form.addEventListener("submit", async function (event) {
     console.log("Response:", rawResponse);
 
     if (response.ok) {
-      formMessage.textContent =
-        result.message || "Message sent successfully.";
+      formMessage.textContent = "Message sent successfully.";
 
       form.reset();
 
@@ -52,11 +51,11 @@ form.addEventListener("submit", async function (event) {
       }
     } else {
       formMessage.textContent =
-        result.error || "Something went wrong.";
+        `Server error (${response.status}). Check console.`;
     }
 
   } catch (error) {
-    console.error(error);
+    console.error("Fetch error:", error);
 
     formMessage.textContent =
       "Unable to send message. Please try again.";
