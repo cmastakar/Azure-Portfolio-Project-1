@@ -204,7 +204,10 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
         print(f"Value error: {error}")
 
         return func.HttpResponse(
-            json.dumps({"error": "Invalid request"}),
+            json.dumps({
+                "error": "Invalid request",
+                "details": str(error)
+            }),
             status_code=400,
             mimetype="application/json"
         )
