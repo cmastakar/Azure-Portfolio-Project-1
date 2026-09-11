@@ -144,12 +144,12 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype="application/json"
             )
 
-        # Create Azure Communication Services email client
+        # Create Azure Communication Services Email client
         email_client = EmailClient.from_connection_string(
             connection_string
         )
 
-        # Build email
+        # Build email message
         email_message = {
             "senderAddress": sender_address,
             "recipients": {
@@ -187,7 +187,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype="application/json"
             )
 
-        # Success
+        # Success response
         return func.HttpResponse(
             json.dumps({
                 "success": True,
@@ -200,11 +200,11 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
     except (ValueError, TypeError) as error:
         print(f"Value/Type error: {error}")
 
-    return func.HttpResponse(
-        json.dumps({"error": "Invalid request"}),
-        status_code=400,
-        mimetype="application/json"
-    )
+        return func.HttpResponse(
+            json.dumps({"error": "Invalid request"}),
+            status_code=400,
+            mimetype="application/json"
+        )
 
     except Exception as error:
         print(f"Contact function error: {error}")
