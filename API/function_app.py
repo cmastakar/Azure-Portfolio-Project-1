@@ -123,7 +123,10 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
 
         if not verification_result.get("success"):
             return func.HttpResponse(
-                json.dumps({"error": "Security verification failed"}),
+                json.dumps({
+                    "error": "Security verification failed",
+                    "turnstile": verification_result
+                }),
                 status_code=403,
                 mimetype="application/json"
             )
