@@ -197,8 +197,8 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
             mimetype="application/json"
         )
 
-    except (ValueError, TypeError) as error:
-        print(f"Value/Type error: {error}")
+    except ValueError as error:
+        print(f"Value error: {error}")
 
         return func.HttpResponse(
             json.dumps({"error": "Invalid request"}),
@@ -207,10 +207,13 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
         )
 
     except Exception as error:
-        print(f"Contact function error: {error}")
+        print(f"Contact function error: {type(error).__name__}: {error}")
 
         return func.HttpResponse(
-            json.dumps({"error": "Server error"}),
+            json.dumps({
+                "error": "Server error",
+                "type": type(error).__name__
+            }),
             status_code=500,
             mimetype="application/json"
         )
