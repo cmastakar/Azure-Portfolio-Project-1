@@ -124,8 +124,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
         if not verification_result.get("success"):
             return func.HttpResponse(
                 json.dumps({
-                    "error": "Security verification failed",
-                    "turnstile": verification_result
+                    "error": "Security verification failed"
                 }),
                 status_code=403,
                 mimetype="application/json"
@@ -205,8 +204,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
 
         return func.HttpResponse(
             json.dumps({
-                "error": "Invalid request",
-                "details": str(error)
+                "error": "Invalid request"
             }),
             status_code=400,
             mimetype="application/json"
@@ -217,8 +215,7 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
 
         return func.HttpResponse(
             json.dumps({
-                "error": "Server error",
-                "type": type(error).__name__
+                "error": "Server error"
             }),
             status_code=500,
             mimetype="application/json"
