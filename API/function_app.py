@@ -6,9 +6,41 @@ import os
 import re
 import urllib.parse
 import urllib.request
+from datetime import datetime, timezone, timedelta
 
 
 app = func.FunctionApp()
+
+
+# --- Rate limiting (in-memory, per-instance) -------------------------------
+
+_rate_limit_store = {}  # {ip: (window_start, count)}
+_RATE_LIMIT_MAX = 5
+_RATE_LIMIT_WINDOW = timedelta(minutes=15)
+
+
+def check_rate_limit(ip: str) -> bool:
+    """Returns True if the request is allowed, False if rate-limited."""
+    now = datetime.now(timezone.utc)
+    window_start, count = _rate_limit_store.get(ip, (now, 0))
+
+    if now - window_start > _RATE_LIMIT_WINDOW:
+        _rate_limit_store[ip] = (now, 1)
+        return True
+
+    if count >= _RATE_LIMIT_MAX:
+        return False
+
+    _rate_limit_store[ip] = (window_start, count + 1)
+    return True
+
+
+# --- Sanitization ------------------------------------------------------
+
+def sanitize_header(value: str) -> str:
+    """Strip CR/LF and collapse whitespace to prevent header injection
+    when a value is used in an email subject line or header field."""
+    return re.sub(r"[\r\n]+", " ", value).strip()
 
 
 @app.route(
@@ -19,6 +51,16 @@ app = func.FunctionApp()
 def contact(req: func.HttpRequest) -> func.HttpResponse:
 
     try:
+        # Rate limit check (per client IP)
+        client_ip = req.headers.get("X-Forwarded-For", "unknown").split(",")[0].strip()
+
+        if not check_rate_limit(client_ip):
+            return func.HttpResponse(
+                json.dumps({"error": "Too many requests. Please try again later."}),
+                status_code=429,
+                mimetype="application/json"
+            )
+
         data = req.get_json()
 
         name = str(data.get("name", "")).strip()
@@ -82,6 +124,10 @@ def contact(req: func.HttpRequest) -> func.HttpResponse:
                 status_code=400,
                 mimetype="application/json"
             )
+
+        # Sanitize values that get embedded in email headers/subject
+        name = sanitize_header(name)
+        company = sanitize_header(company)
 
         # Turnstile token must exist
         if not turnstile_token:
